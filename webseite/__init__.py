@@ -3,4 +3,4 @@ from sys import version
 
 app = Flask(__name__)
 
-from webseite.admin import routes
+from webseite.home import routes

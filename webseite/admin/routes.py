@@ -4,7 +4,7 @@ from time import sleep
 from webseite import app
 
 
-@app.route('/')
+@app.route('/admin/')
 def index():
     return render_template('admin/index.html', title='Coming soon')
 
