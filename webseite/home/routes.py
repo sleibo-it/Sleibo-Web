@@ -9,6 +9,11 @@ def index():
     return render_template('home/index.html', title='Home')
 
 
+@app.route('/impressum/')
+def impressum():
+    return render_template('home/impressum.html', title='Impressum')
+
+
 @app.route("/time/")
 def time():
     def streamer():
