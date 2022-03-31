@@ -1,19 +1,44 @@
-from flask import render_template, Response
-from datetime import datetime
-from time import sleep
-from webseite import app
+from flask import render_template, session, request, redirect, url_for, flash
+from .forms import RegistrationForm, LoginForm
+from .models import User
+from webseite import app, db, bcrypt
 
 
-@app.route('/admin/')
-def index():
-    return render_template('admin/index.html', title='Coming soon')
+@app.route('/admin')
+def home():
+    return render_template('admin/index.html', title='Admin Page')
 
 
-@app.route("/time/")
-def time():
-    def streamer():
-        while True:
-            yield "<p>{}</p>".format(datetime.now())
-            sleep(1)
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm(request.form)
+    if request.method == 'POST' and form.validate():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            session['username'] = form.username.data
+            flash(f'Hallo {form.username.data}', 'success')
+            return redirect(request.args.get('next') or url_for('home'))
+        else:
+            flash('Wrong Passwort! Please try again.', 'danger')
 
-    return Response(streamer())
+    return render_template('admin/login.html', form=form, title="Login Page")
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+        hash_password = bcrypt.generate_password_hash(form.password.data)
+        user = User(Vorname=form.Vorname.data,
+                    Nachname=form.Nachname.data,
+                    username=form.username.data,
+                    strasse=form.strasse.data,
+                    plz=form.plz.data,
+                    ort=form.ort.data,
+                    email=form.email.data,
+                    password=hash_password)
+        db.session.add(user)
+        db.session.commit()
+        flash(f'Hallo {form.Vorname.data} danke für die Registrierung', 'success')
+        return redirect(url_for('home'))
+    return render_template('admin/register.html', form=form, title='Registeration Page')
