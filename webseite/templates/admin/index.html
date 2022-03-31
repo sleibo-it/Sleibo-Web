@@ -1,6 +1,36 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1 class="center">Coming Soon</h1>
-{% include '_messages.html' %}
+<div class="container">
+    {% include '_messages.html' %}
+    <h2><u>Kontakt Anfragen</u></h2></br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Vorname</th>
+          <th scope="col">Nachname</th>
+          <th scope="col">Email</th>
+          <th scope="col">Betreff</th>
+          <th scope="col">Nachricht</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            {% for con in contact %}
+
+            <th scope="row">{{ con.id }}</th>
+            <td>{{ con.Vorname }}</td>
+            <td>{{ con.Nachname }}</td>
+            <td>{{ con.email }}</td>
+            <td>{{ con.betreff }}</td>
+            <td>{{ con.nachricht }}</td>
+
+        </tr>
+{% endfor %}
+      </tbody>
+    </table>
+
+
+</div>
 {% endblock content %}

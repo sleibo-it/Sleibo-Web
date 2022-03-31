@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    {% include '_messages.html' %}
+        {% from "_formhelpers.html" import render_field %}
+        <div class="text-center h1 text-white bg-primary p-2">Kontakt</div>
+        <form method="post" enctype="multipart/form-data">
+            <div>
+                {{ render_field(form.Vorname , class="form-control") }}
+                {{ render_field(form.Nachname , class="form-control") }}
+                {{ render_field(form.email, class="form-control") }}
+                {{ render_field(form.betreff, class="form-control") }}
+                {{ render_field(form.nachricht, class="form-control") }}
+
+            </div>
+            <p><input type=submit value="Absenden" class="btn btn-info mt-2"></p>
+        </form>
+</div>
+
+{% endblock %}
