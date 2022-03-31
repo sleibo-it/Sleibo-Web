@@ -1,12 +1,17 @@
 from flask import render_template, session, request, redirect, url_for, flash
 from .forms import RegistrationForm, LoginForm
 from .models import User
+from webseite.home.models import Contact
 from webseite import app, db, bcrypt
 
 
 @app.route('/admin')
 def home():
-    return render_template('admin/index.html', title='Admin Page')
+    if 'username' not in session:
+        flash(f'Bitte zuerst Anmelden', 'danger')
+        return redirect(url_for('login'))
+    contact = Contact.query.all()
+    return render_template('admin/index.html', contact=contact, title="Admin Page")
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -42,3 +47,10 @@ def register():
         flash(f'Hallo {form.Vorname.data} danke für die Registrierung', 'success')
         return redirect(url_for('home'))
     return render_template('admin/register.html', form=form, title='Registeration Page')
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+
+    return redirect(url_for('index'))
