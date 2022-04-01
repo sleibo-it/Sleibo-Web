@@ -43,33 +43,7 @@
         </div>
     </div>
     <!-- Content Section Ende -->
-    <!-- Kontakt Formular Anfang -->
-    <div class="container my-5">
-    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
 
-        <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-    {% include '_messages.html' %}
-        {% from "_formhelpers.html" import render_field %}
-        <h1 class="display-4 fw-bold lh-1">Kontakt</h1>
-        <form method="post" enctype="multipart/form-data">
-            <div>
-                {{ render_field(form.Vorname , class="form-control") }}
-                {{ render_field(form.Nachname , class="form-control") }}
-                {{ render_field(form.email, class="form-control") }}
-                {{ render_field(form.betreff, class="form-control") }}
-                {{ render_field(form.nachricht, class="form-control") }}
-
-            </div>
-            <p><input type=submit value="Absenden" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold"></p>
-        </form>
-
-        </div>
-         <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-rg">
-                <img class="rounded-lg-3" src="../../static/images/Mobile user-amico.svg" alt="Kontakt" width="400">
-         </div>
-    </div>
-    </div>
-    <!-- Kontakt Formular Ende -->
     <!--- Zusammenfassung Anfang -->
 <div class="container px-4 py-5" id="icon-grid">
     <h2 class="pb-2 border-bottom">Unsere Leistungen insgesamt</h2>
