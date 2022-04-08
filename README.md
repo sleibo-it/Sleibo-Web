@@ -1,92 +1,143 @@
 # sleibo-web
 
-https://blog.jrehkemper.de/flask-applikation-auf-einem-apache2-wsgi-server-hosten/
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin http://git.sleibo-it.de/sleibo-dev/sleibo-web.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](http://git.sleibo-it.de/sleibo-dev/sleibo-web/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+Bevor Ihr das Installiert auf euren Webserver bitte prüft ob dieser wsgi fähig oder aber Proxy unterstützt.
+Es muss ebenfalls Python3 installiert sein.(Python 3.9 oder höher).
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Erste Schritte
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+Sollte das alles der fall sein erst mal die benötigten Bibliotheken installieren und ein virtual environment:
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+ `python3 -m venv ` 
+ 
+danach unter Linux:
+ 
+`./wasauchimmer-env/bin/activate`
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+und unter Windows:
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+`./wasauchimmer-env/bin/activate.bat`
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+oder mit der Powershell:
 
-## License
-For open source projects, say how it is licensed.
+`./wasauchimmer-env/bin/activate.ps1`
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+
+
+Jetzt die Bibliotheken installieren:
+
+`pip install -r requirements.txt`
+
+nun könnt Ihr die Webanwendung schon mal Lokal starten:
+
+Windows: `py app.py`
+
+Linux: `python3 ./app.py`
+
+### Apache2 Webserver mit mod_wsgi
+
+Hier habt Ihr Glück da müsst Ihr nicht viel tun ausser in der config.wsgi die Pfade anzupassen.
+Ist ziemlich selbsterklärend was wo wie eingetragen wird. Noch besser ist das Ihr das mit dem per Handstarten euch sparen könnt.
+
+Ist aber nicht immer die Beste Idee. Bei SQLite3 Datenbanken rate ich davon ab weil es nicht funktionieren wird.
+Solltet Ihr den weg aber gehen wollen benutzt MySQL oder ähnliches unter [SQLalchemy](https://www.sqlalchemy.org/) findet Ihr eine Anleitung dazu.
+
+### Nginx Webserver als Proxy
+
+Hier gibt es mehrere Wege um sich das per Hand starten zu sparen eine Möglichkeit wäre Ihr installiert gunicorn
+das geht am einfachsten mit pip in der Shell.
+
+    pip install gunicorn
+
+Als Nächstes erstellen wir eine Datei, die als Einstiegspunkt für unsere Anwendung dient. Diese sagt dem Gunicorn-Server, wie die Interaktion mit der Anwendung erfolgt.
+Diese nennen wir wsgi.py:
+
+    from myproject import app
+
+    if __name__ == "__main__":
+        app.run()`
+
+
+Nun können wir gunicorn starten:
+
+    gunicorn --bind 0.0.0.0:5000 wsgi:app
+
+Um zu testen, ob das ganze auch funktioniert gib in deinen Browser http://deine_server_ip:5000 ein.
+
+Wenn alles richtig gemacht hast sollte jetzt die Webseite zusehen sein.
+
+So da wir das alle nicht immer tippen wollen erstellen wir uns ein autostart.bat für Windows und kopieren uns das vorher eingetippte da rein
+und speichern das. Nun machen wir eine Verküpfung davon und kopieren diese in die Autostart
+Wo ihr das findet ab Windows 2016,2019, 2022 Server oder Windows 10 oder 11 könnt Ihr bei Google erfragen.
+
+Nun wird es was tricky jetzt das ganze für Linux da müsste ich wohl etwas ausführlicher sein. Warum aber das Rad neu erfinden?
+Es gibt eine sehr gute Anleitung auf [digitalocean](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-20-04-de).
+Eigentlich für Ubuntu aber was da funktioniert klappt auch auf Debian. Es ist auch nicht sinnvoll, wenn ich euch hier das von der Ursuppe an alles erkläre.
+Das ist nicht der Sinn und es gibt Leute, die das besser können.
+
+## Wo finde ich was ?
+
+Ja das leidige Thema und bevor man mich mit unnötigen Fragen löchert hier eine kleine Übersicht
+
+### Datenbank Modelle
+
+Aufgrund dessen das auf dauer, wie schon vorbereitet, die Konfiguration in die config.py ausgelagert wird habe ich alle Datenbankmodelle 
+im Verzeichniss webseite unter models.py. Das wirkt zuerst zwar etwas unübersichtlich aber durch die Kommentare ist klar erklärt welche Klasse für was ist.
+
+Einige Modelle sind zwar schon vorbereitet aber noch nicht implementiert und müssen erstmal noch überdacht werden. Wie Datenbankmodelle aufgebaut werden ist ebenfalls unter [SQLalchemy](https://www.sqlalchemy.org/) 
+zu finden. Ansonsten wenn Ihr drüber schaut, ist es relativ easy und leicht zu verstehen.
+
+### Ordnerstruktur
+
+Um nicht die Übersicht ganz zu verlieren sind alle Ordner nach funktion erstellt worden. So zum Beispiel ist im Ordner Home die Landingpage.
+. In dem Ordner home findet man die routes.py, forms.py und noch eine überflüssige model.py. Im Ordner /templates/home die dazugehörigen HTML Dateien.
+
+### Design/Aussehen ändern
+
+Das Aussehen der Webseite könnt Ihr mit der Datei layout.html im Ordner templates nach euren bedürfnissen anpassen. Der Zeit wird Bootstrap 5 als 
+CSS-Framework benutzt. Wenn Ihr lieber euer eigenes CSS nutzen wollt und eigne javascript Anwendungen könnt Ihr diese in webseite/static/css für Stylesheets und 
+webseite/static/js für javascript nutze. Ich gehe davon aus das Ihr wisst was Ihr da macht. Ansonsten empfehle ich euch [Selfhtml](https://wiki.selfhtml.org/).
+
+## Konfiguration
+
+Wie schon erwähnt wird auf langer sicht die Konfiguration in die config.py ausgelagert aber zurzeit befindet sich die noch in webseite/__ ini __.py
+Hier ist folgendes zu änder: 
+
+    ...
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sleibo.db'
+    app.config['SECRET_KEY'] = 'slngqenrgüeqrngüqerg4emddcbet'
+    ...
+
+Blueprints werden hier hinzugefügt:
+
+    ...
+    from webseite.home.routes import home
+    app.register_blueprint(home)
+    ...
+
+Die Bibliothek flask-Admin ist nicht fix und ist nur ein platzhalter und kann ignoriert werden oder entfernt werden.
+
+Wenn Ihr flask-admin nicht nutzen möchtet, muss folgendes aus der __ ini __.py entfernt werden:
+
+    ...
+    from flask_admin import Admin
+    from flask_admin.contrib.sqla import ModelView
+    ...
+    admin = Admin(app)
+    ...
+    from webseite.models import Kunde, Team, Post, Anfragen
+    admin.add_view(ModelView(Kunde, db.session))
+    admin.add_view(ModelView(Team, db.session))
+    admin.add_view(ModelView(Post, db.session))
+    admin.add_view(ModelView(Anfragen, db.session))
+ 
+
+Die Bibliothek flask-mail wurde noch nicht implementiert und kann erstmal entfernt werden. Der spätere sinn, ist das darüber  
+E-Mails aud dem Ticket bereich und den Anfragen aus dem Kontaktformular an den Webseitenbetreiber und Kunden automatisch gesendet werden.
+
+
+
+
+
