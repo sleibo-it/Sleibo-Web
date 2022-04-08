@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, TextAreaField, SubmitField, EmailField, validators
+from wtforms import Form, StringField, TextAreaField, EmailField, validators
 
 
 class ContactForm(Form):

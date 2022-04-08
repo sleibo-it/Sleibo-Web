@@ -1,36 +1,24 @@
-{% extends "layout.html" %}
+{% extends 'admin/master.html' %}
 
-{% block content %}
-<div class="container">
-    {% include '_messages.html' %}
-    <h2><u>Kontakt Anfragen</u></h2></br>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Vorname</th>
-          <th scope="col">Nachname</th>
-          <th scope="col">Email</th>
-          <th scope="col">Betreff</th>
-          <th scope="col">Nachricht</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-            {% for con in contact %}
+{% block body %}
+  {{ super() }}
 
-            <th scope="row">{{ con.id }}</th>
-            <td>{{ con.Vorname }}</td>
-            <td>{{ con.Nachname }}</td>
-            <td>{{ con.email }}</td>
-            <td>{{ con.betreff }}</td>
-            <td>{{ con.nachricht }}</td>
-
-        </tr>
-{% endfor %}
-      </tbody>
-    </table>
-
-
-</div>
-{% endblock content %}
+    <div class="container my-5">
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+            <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+                <h1 class="display-4 fw-bold lh-1">Flask-Admin Beispiel</h1>
+                <p class="lead">Einfache Admin-Ansichten, die nichts mit Modellen zu tun haben.</p>
+              <p>Dieses Beispiel zeigt, wie Sie Ihre eigenen Ansichten zur Verwaltungsoberfläche hinzufügen können.
+                Die Ansichten müssen nicht mit zu einem Ihrer Modelle gehören und Sie können sie mit beliebigen Inhalten
+                füllen.</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+                    <a class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" href="/">Zurück</a>
+                  <!--  <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button> -->
+                </div>
+            </div>
+            <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden ">
+                <img class="rounded-lg-3" src="../../static/images/Static website-amico.svg" alt="Webseite Static" width="350">
+            </div>
+        </div>
+    </div>
+{% endblock %}
