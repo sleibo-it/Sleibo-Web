@@ -102,42 +102,55 @@ webseite/static/js für javascript nutze. Ich gehe davon aus das Ihr wisst was I
 
 ## Konfiguration
 
-Wie schon erwähnt wird auf langer sicht die Konfiguration in die config.py ausgelagert aber zurzeit befindet sich die noch in webseite/__ ini __.py
-Hier ist folgendes zu änder: 
+Neu ist jetzt die confiig.py hier steht alles wesentliche:
 
-    ...
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sleibo.db'
-    app.config['SECRET_KEY'] = 'slngqenrgüeqrngüqerg4emddcbet'
-    ...
+    class Config:
+    SECRET_KEY = 'wkjetölnvöjrhböglqnvölkjwerg'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db'
+    MAIL_SERVER = 'smtp.googlemail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = os.environ.get('EMAIL_USER')
+    MAIL_PASSWORD = os.environ.get('EMAIL_PASS')
 
-Blueprints werden hier hinzugefügt:
+In der __ ini __.py kann man weiterhin Blueprints hinzufügen das geschieht ind er create_app Klasse:
 
-    ...
-    from webseite.home.routes import home
-    app.register_blueprint(home)
-    ...
-
-Die Bibliothek flask-Admin ist nicht fix und ist nur ein platzhalter und kann ignoriert werden oder entfernt werden.
-
-Wenn Ihr flask-admin nicht nutzen möchtet, muss folgendes aus der __ ini __.py entfernt werden:
-
-    ...
-    from flask_admin import Admin
-    from flask_admin.contrib.sqla import ModelView
-    ...
-    admin = Admin(app)
-    ...
-    from webseite.models import Kunde, Team, Post, Anfragen
-    admin.add_view(ModelView(Kunde, db.session))
-    admin.add_view(ModelView(Team, db.session))
-    admin.add_view(ModelView(Post, db.session))
-    admin.add_view(ModelView(Anfragen, db.session))
- 
-
-Die Bibliothek flask-mail wurde noch nicht implementiert und kann erstmal entfernt werden. Der spätere sinn, ist das darüber  
-E-Mails aud dem Ticket bereich und den Anfragen aus dem Kontaktformular an den Webseitenbetreiber und Kunden automatisch gesendet werden.
+    def create_app(config_class=Config):
+        app = Flask(__name__)
+        app.config.from_object(Config)
+    
+        db.init_app(app)
+        bcrypt.init_app(app)
+        login_manager.init_app(app)
+        mail.init_app(app)
+    
+        from webseite.users.routes import users
+        from webseite.posts.routes import posts
+        from webseite.main.routes import main
+        app.register_blueprint(users)
+        app.register_blueprint(posts)
+        app.register_blueprint(main)
+    
+        return app
 
 
+Wichtig !!! Eine neue Datenbank kann nur angelegt werden, wenn die alte gelöscht wird und die Pythonshell aufgerufen
+wird. Dort muss dann folgendes gemacht werden ( die >>> Symbolisieren die Python Shell):
 
+    >>> from webseite import create_app, db
+
+Enter Taste drücken 
+
+    >>> db.create_all(app=create_app())
+und wieder Enter-Taste drücken. Wenn ihr was falsch gemacht habt, wird dann sowas kommen:
+
+     File "C:\Users\andre\.virtualenvs\sleibo-web\lib\site-packages\flask\app.py", line 1028, in register_blueprint
+        blueprint.register(self, options)
+      File "C:\Users\andre\.virtualenvs\sleibo-web\lib\site-packages\flask\blueprints.py", line 305, in register
+        raise ValueError(
+    ValueError: The name 'contact' is already registered for a different blueprint. Use 'name=' to provide a unique name.
+
+
+Wenn alles richtig ist, kommt gar nichts ausser eine neue Datenbank Datei z.B. side.db im Ordner webseite.
 
 
