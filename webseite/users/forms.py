@@ -3,7 +3,7 @@ from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_login import current_user
-from webseite.models import Kunde
+from webseite.models import User
 
 
 class RegistrationForm(FlaskForm):
@@ -17,13 +17,13 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Sign Up')
 
     def validate_username(self, username):
-        kunde = Kunde.query.filter_by(username=username.data).first()
-        if kunde:
+        user = User.query.filter_by(username=username.data).first()
+        if user:
             raise ValidationError('That username is taken. Please choose a different one.')
 
     def validate_email(self, email):
-        kunde = Kunde.query.filter_by(email=email.data).first()
-        if kunde:
+        user = User.query.filter_by(email=email.data).first()
+        if user:
             raise ValidationError('That email is taken. Please choose a different one.')
 
 
@@ -45,14 +45,14 @@ class UpdateAccountForm(FlaskForm):
 
     def validate_username(self, username):
         if username.data != current_user.username:
-            kunde = Kunde.query.filter_by(username=username.data).first()
-            if kunde:
+            user = User.query.filter_by(username=username.data).first()
+            if user:
                 raise ValidationError('That username is taken. Please choose a different one.')
 
     def validate_email(self, email):
         if email.data != current_user.email:
-            kunde = Kunde.query.filter_by(email=email.data).first()
-            if kunde:
+            user = User.query.filter_by(email=email.data).first()
+            if user:
                 raise ValidationError('That email is taken. Please choose a different one.')
 
 
@@ -62,7 +62,7 @@ class RequestResetForm(FlaskForm):
     submit = SubmitField('Request Password Reset')
 
     def validate_email(self, email):
-        user = Kunde.query.filter_by(email=email.data).first()
+        user = User.query.filter_by(email=email.data).first()
         if user is None:
             raise ValidationError('There is no account with that email. You must register first.')
 
@@ -72,6 +72,3 @@ class ResetPasswordForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
-
-
-
