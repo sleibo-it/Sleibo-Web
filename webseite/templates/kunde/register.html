@@ -1,9 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="container">
-        <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
+    <div class="content-section">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
@@ -67,11 +64,9 @@
             </div>
         </form>
     </div>
-            <div class="col-md-4">
     <div class="border-top pt-3">
         <small class="text-muted">
-            Already Have An Account? <a class="ml-2" href="{{ url_for('Kunde.login') }}">Sign In</a>
+            Already Have An Account? <a class="ml-2" href="{{ url_for('users.login') }}">Sign In</a>
         </small>
     </div>
-                </div>
 {% endblock content %}

@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from webseite import db, bcrypt
 from webseite.models import User, Post
 from webseite.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
-                                   RequestResetForm, ResetPasswordForm)
+                                  RequestResetForm, ResetPasswordForm)
 from webseite.users.utils import save_picture, send_reset_email
 
 users = Blueprint('users', __name__)
@@ -21,7 +21,7 @@ def register():
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('users.login'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('kunde/register.html', title='Register', form=form)
 
 
 @users.route("/login", methods=['GET', 'POST'])
@@ -37,7 +37,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
-    return render_template('login.html', title='Login', form=form)
+    return render_template('kunde/login.html', title='Login', form=form)
 
 
 @users.route("/logout")
@@ -63,7 +63,7 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account',
+    return render_template('kunde/account.html', title='Account',
                            image_file=image_file, form=form)
 
 
@@ -71,10 +71,10 @@ def account():
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user)\
-        .order_by(Post.date_posted.desc())\
+    posts = Post.query.filter_by(author=user) \
+        .order_by(Post.date_posted.desc()) \
         .paginate(page=page, per_page=5)
-    return render_template('user_posts.html', posts=posts, user=user)
+    return render_template('team/user_posts.html', posts=posts, user=user)
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])

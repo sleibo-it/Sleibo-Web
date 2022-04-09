@@ -98,18 +98,17 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
-<!--
-                    {% if session %}
-                        <a class="nav-link" href="/admin" >Daschboard</a>
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Shop</a>
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Kunden Support</a>
-                        <a class="nav-link" href="/logout" >Logout</a>
-                    {% else %}
-                        <a class="nav-link" href="/login" >Login</a>
-                    {% endif %}
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Datenschutzerklärung</a>
-                    -->
-                    <a class="nav-link" href="/impressum/">Impressum</a>
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('main.blog') }}">Blog</a>
+                     {% if current_user.is_authenticated %}
+                            <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Logout</a>
+
+                      {% else %}
+                            <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
+                            <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a>
+                      {% endif %}
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Datenschutzerklärung</a>
+
+                    <a class="nav-link" href="{{ url_for('main.about') }}">Impressum</a>
                 </div>
             </div>
         </div>
