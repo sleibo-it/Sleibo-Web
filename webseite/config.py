@@ -10,3 +10,5 @@ class Config:
     MAIL_USERNAME = os.environ.get('EMAIL_USER')
     MAIL_PASSWORD = os.environ.get('EMAIL_PASS')
     FLASK_ADMIN_SWATCH = 'cerulean'
+    BASIC_AUTH_USERNAME = 'Admin'
+    BASIC_AUTH_PASSWORD = 'quaSeu2i'
